@@ -1,6 +1,7 @@
 package com.zerobase.account.controller;
 
 import com.zerobase.account.domain.Account;
+import com.zerobase.account.dto.AccountDto;
 import com.zerobase.account.dto.CreateAccount;
 import com.zerobase.account.service.AccountService;
 import com.zerobase.account.service.RedisTestService;
@@ -18,9 +19,12 @@ public class AccountController {
     @PostMapping("/account")
     public CreateAccount.Response createAccount(
             @RequestBody @Valid CreateAccount.Request createAccount) {
-        accountService.createAccount(
-                createAccount.getUserId(),
-                createAccount.getInitialBalance()
+
+        return CreateAccount.Response.from(
+                accountService.createAccount(
+                        createAccount.getUserId(),
+                        createAccount.getInitialBalance()
+                )
         );
     }
 
