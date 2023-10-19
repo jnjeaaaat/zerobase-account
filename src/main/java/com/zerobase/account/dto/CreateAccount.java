@@ -1,5 +1,7 @@
 package com.zerobase.account.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +11,15 @@ public class CreateAccount {
     @Getter
     @Setter
     public static class Request {
+        @NotNull
+        @Min(1)
+        /*
+            @Valid 에서 처리할 validation 들
+         */
         private Long userId;
+
+        @NotNull
+        @Min(100)
         private Long initialBalance;
     }
 
