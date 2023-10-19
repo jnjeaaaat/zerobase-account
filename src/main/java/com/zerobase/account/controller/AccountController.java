@@ -6,7 +6,9 @@ import com.zerobase.account.dto.CreateAccount;
 import com.zerobase.account.service.AccountService;
 import com.zerobase.account.service.RedisTestService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

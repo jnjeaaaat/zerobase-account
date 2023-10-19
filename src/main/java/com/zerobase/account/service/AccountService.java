@@ -7,7 +7,9 @@ import com.zerobase.account.exception.AccountException;
 import com.zerobase.account.repository.AccountRepository;
 import com.zerobase.account.repository.AccountUserRepository;
 import com.zerobase.account.type.ErrorCode;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,7 @@ public class AccountService {
                 .orElseThrow(() -> new AccountException(USER_NOT_FOUND));
         // orElseThrow(): 있으면 데이터 저장, 없으면 error
 
-        String newAccountNumber = accountRepository.findFirstByOrOrderByIdDesc()
+        String newAccountNumber = accountRepository.findFirstByOrderByIdDesc()
                 .map(account -> (Integer.parseInt(account.getAccountNumber())) + 1 + "")
                 .orElse("1000000000");
         // orElse(): 없으면 default 값 설정
@@ -62,10 +64,10 @@ public class AccountService {
     }
 
     @Transactional
-    public Account getAccount(Long accountId) {
-        if (accountId < 0) {
+    public Account getAccount(Long id) {
+        if (id < 0) {
             throw new RuntimeException("Minus");
         }
-        return accountRepository.findById(accountId).get();
+        return accountRepository.findById(id).get();
     }
 }
