@@ -43,4 +43,3 @@ out/
 *.iml
 out
 gen
-/src/main/resources/application.yml
