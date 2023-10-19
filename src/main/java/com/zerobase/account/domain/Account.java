@@ -1,5 +1,6 @@
 package com.zerobase.account.domain;
 
+import com.zerobase.account.type.AccountStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

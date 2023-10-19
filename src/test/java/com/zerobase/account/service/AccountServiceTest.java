@@ -1,9 +1,8 @@
 package com.zerobase.account.service;
 
 import com.zerobase.account.domain.Account;
-import com.zerobase.account.domain.AccountStatus;
+import com.zerobase.account.type.AccountStatus;
 import com.zerobase.account.repository.AccountRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

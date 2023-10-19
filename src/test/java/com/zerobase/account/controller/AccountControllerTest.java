@@ -1,7 +1,7 @@
 package com.zerobase.account.controller;
 
 import com.zerobase.account.domain.Account;
-import com.zerobase.account.domain.AccountStatus;
+import com.zerobase.account.type.AccountStatus;
 import com.zerobase.account.service.AccountService;
 import com.zerobase.account.service.RedisTestService;
 import org.junit.jupiter.api.Test;
