@@ -62,7 +62,7 @@ class AccountServiceTest {
         //then
         verify(accountRepository, times(1)).save(captor.capture());
         assertEquals(12L, accountDto.getUserId());
-        assertEquals("1000000012", captor.getValue().getAccountNumber());
+        assertEquals("1000000013", captor.getValue().getAccountNumber());
 //        assertEquals("1000000013", accountDto.getAccountNumber());
     }
 
@@ -108,6 +108,25 @@ class AccountServiceTest {
         assertEquals(ErrorCode.USER_NOT_FOUND, exception.getErrorCode());
     }
 
+    @Test
+    void createAccount_maxAccountIs10() {
+        //given
+        AccountUser user = AccountUser.builder()
+                .id(15L)
+                .name("Pobi").build();
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(user));
+        given(accountRepository.countByAccountUser(any()))
+                .willReturn(10);
+
+        //when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> accountService.createAccount(1L, 500L));
+
+        //then
+        assertEquals(ErrorCode.MAX_ACCOUNT_PER_USER_10, exception.getErrorCode());
+
+    }
 
 //    @Test
 //    @DisplayName("계좌 조회 성공")

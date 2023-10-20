@@ -35,6 +35,8 @@ public class AccountService {
                 .orElseThrow(() -> new AccountException(USER_NOT_FOUND));
         // orElseThrow(): 있으면 데이터 저장, 없으면 error
 
+        validateCreateAccount(accountUser);
+
         String newAccountNumber = accountRepository.findFirstByOrderByIdDesc()
                 .map(account -> (Integer.parseInt(account.getAccountNumber())) + 1 + "")
                 .orElse("1000000000");
@@ -51,6 +53,12 @@ public class AccountService {
                                 .build()
                 )
         );
+    }
+
+    private void validateCreateAccount(AccountUser accountUser) {
+        if (accountRepository.countByAccountUser(accountUser) >= 10) {
+            throw new AccountException(MAX_ACCOUNT_PER_USER_10);
+        }
     }
 
     @Transactional
