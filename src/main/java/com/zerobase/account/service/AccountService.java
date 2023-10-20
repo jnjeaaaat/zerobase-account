@@ -40,16 +40,6 @@ public class AccountService {
                 .orElse("1000000000");
         // orElse(): 없으면 default 값 설정
 
-        accountRepository.save(
-                Account.builder()
-                        .accountUser(accountUser)
-                        .accountNumber(newAccountNumber)
-                        .accountStatus(IN_USE)
-                        .balance(initialBalance)
-                        .registeredAt(LocalDateTime.now())
-                        .build()
-        );
-
         return AccountDto.fromEntity(
                 accountRepository.save(
                         Account.builder()
