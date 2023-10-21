@@ -1,6 +1,8 @@
 package com.zerobase.account.controller;
 
+import com.zerobase.account.dto.TransactionDto;
 import com.zerobase.account.dto.UseBalance;
+import com.zerobase.account.exception.AccountException;
 import com.zerobase.account.service.TransactionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class TransactionController {
-
     private final TransactionService transactionService;
 
     @PostMapping("/transaction/use")
     public UseBalance.Response useBalance(
             @Valid @RequestBody UseBalance.Request request) {
-        return null;
+
+        try {
+            return UseBalance.Response.from(
+                    transactionService.useBalance(
+                            request.getUserId(),
+                            request.getAccountNumber(),
+                            request.getAmount()
+                    )
+            );
+        } catch (AccountException e) {
+            log.error("Failed to use balance.");
+
+            transactionService.saveFailedUseTransaction(
+                    request.getAccountNumber(),
+                    request.getAmount()
+            );
+
+            throw e;
+        }
+
     }
 }
