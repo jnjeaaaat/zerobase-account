@@ -83,10 +83,10 @@ class AccountControllerTest {
 
 
         //then
-        mockMvc.perform(get("/app/accounts/876"))
+        mockMvc.perform(get("/account/876"))
                 .andDo(print())
-                .andExpect(jsonPath("$.result.accountNumber").value("3456"))
-                .andExpect(jsonPath("$.result.accountStatus").value("IN_USE"))
+                .andExpect(jsonPath("$.accountNumber").value("3456"))
+                .andExpect(jsonPath("$.accountStatus").value("IN_USE"))
                 .andExpect(status().isOk());
 
     }

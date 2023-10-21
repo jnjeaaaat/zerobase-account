@@ -84,9 +84,9 @@ public class AccountController {
         return redisTestService.getLock();
     }
 
-//    @GetMapping("/{accountId}")
-//    public Account getAccount(@PathVariable Long accountId) {
-//        return accountService.getAccount(accountId);
-//    }
+    @GetMapping("/account/{accountId}")
+    public Account getAccount(@PathVariable Long accountId) {
+        return accountService.getAccount(accountId);
+    }
 
 }
