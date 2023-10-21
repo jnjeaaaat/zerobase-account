@@ -19,7 +19,8 @@ import static com.zerobase.account.type.ErrorCode.*;
 @AllArgsConstructor
 @Builder
 @Entity
-@EntityListeners(AuditingEntityListener.class) // @CreatedDate, @LastModifiedDate 어노테이션 적용
+@EntityListeners(AuditingEntityListener.class)
+// @CreatedDate, @LastModifiedDate 어노테이션 적용
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

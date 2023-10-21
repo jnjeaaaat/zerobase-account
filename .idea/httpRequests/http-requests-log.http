@@ -1,5 +1,120 @@
 GET http://localhost:8080/account?user_id=1
 
+<> 2023-10-22T031831.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031820.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031816.500.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031811.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031809.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031808.200.json
+
+###
+
+GET http://localhost:8080/account?user_id=1
+
+<> 2023-10-22T031759.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031745.200.json
+
+###
+
+POST http://localhost:8080/account
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "initialBalance": 100000
+}
+
+<> 2023-10-22T031739.200.json
+
+###
+
+POST http://localhost:8080/transaction/use
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "accountNumber": 1000000000,
+  "amount": 1000
+}
+
+<> 2023-10-22T031710.500.json
+
+###
+
+GET http://localhost:8080/account?user_id=1
+
 <> 2023-10-21T042701.200.json
 
 ###
@@ -427,124 +542,6 @@ Content-Type: application/json
 }
 
 <> 2023-10-21T014350.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": 0
-}
-
-<> 2023-10-21T014347.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": 0
-}
-
-<> 2023-10-21T013216.400.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": 0
-}
-
-<> 2023-10-21T012955.400.json
-
-###
-
-DELETE http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "accountNumber": "1000000004"
-}
-
-<> 2023-10-21T012854.200.json
-
-###
-
-DELETE https://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "accountNumber": "1000000004"
-}
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": "10000"
-}
-
-<> 2023-10-21T012755.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": "10000"
-}
-
-<> 2023-10-21T012754.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": "10000"
-}
-
-<> 2023-10-21T012753.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": "10000"
-}
-
-<> 2023-10-21T012743.200.json
-
-###
-
-POST http://localhost:8080/account
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "initialBalance": "10000"
-}
-
-<> 2023-10-21T012736.200.json
 
 ###
 
