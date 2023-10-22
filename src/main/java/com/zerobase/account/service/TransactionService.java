@@ -59,7 +59,7 @@ public class TransactionService {
     }
 
     /**
-     *  transaction validations
+     * transaction validations
      */
     private void validateUseBalance(AccountUser accountUser, Account account, Long amount) {
         if (!Objects.equals(accountUser.getId(), account.getAccountUser().getId())) {
@@ -74,7 +74,7 @@ public class TransactionService {
     }
 
     /**
-     *  useBalance failed
+     * useBalance failed
      */
     @Transactional
     public void saveFailedUseTransaction(String accountNumber, Long amount) {
@@ -138,5 +138,13 @@ public class TransactionService {
                 .orElseThrow(() -> new AccountException(ACCOUNT_ALREADY_UNREGISTERED));
 
         saveAndGetTransaction(CANCEL, F, account, amount);
+    }
+
+    @Transactional
+    public TransactionDto queryTransaction(String transactionId) {
+        return TransactionDto.fromEntity(
+                transactionRepository.findByTransactionId(transactionId)
+                        .orElseThrow(() -> new AccountException(TRANSACTION_NOT_FOUND))
+        );
     }
 }
