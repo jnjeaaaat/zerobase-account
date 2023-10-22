@@ -58,32 +58,34 @@ public class TransactionService {
         );
     }
 
-    /**
-     * transaction validations
-     */
+    /** transaction validations */
     private void validateUseBalance(AccountUser accountUser, Account account, Long amount) {
+        // 사용하려는 유저와 계좌 소유주가 다를 때
         if (!Objects.equals(accountUser.getId(), account.getAccountUser().getId())) {
             throw new AccountException(USER_ACCOUNT_UN_MATCH);
         }
+
+        // 계좌가 이미 해지된 상태일 때
         if (account.getAccountStatus() != IN_USE) {
             throw new AccountException(ACCOUNT_ALREADY_UNREGISTERED);
         }
+
+        // 남은 금액보다 사용하려는 금액이 클 때
         if (account.getBalance() < amount) {
             throw new AccountException(AMOUNT_EXCEED_BALANCE);
         }
     }
 
-    /**
-     * useBalance failed
-     */
+    /** useBalance failed 결과 저장 */
     @Transactional
     public void saveFailedUseTransaction(String accountNumber, Long amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new AccountException(ACCOUNT_ALREADY_UNREGISTERED));
+                .orElseThrow(() -> new AccountException(ACCOUNT_NOT_FOUND));
 
         saveAndGetTransaction(USE, F, account, amount);
     }
 
+    /** save transaction */
     private Transaction saveAndGetTransaction(
             TransactionType transactionType,
             TransactionResultType transactionResultType,
@@ -102,6 +104,7 @@ public class TransactionService {
         );
     }
 
+    /** cancel balance transaction */
     @Transactional
     public TransactionDto cancelBalance(String transactionId,
                                         String accountNumber,
@@ -120,18 +123,25 @@ public class TransactionService {
         );
     }
 
+    /** cancel_balance validation */
     private void validateCancelBalance(String accountNumber, Transaction transaction, Long amount) {
+        // 입력받은 계좌 번호와 거래하려는 계좌 번호가 다를 때
         if (!Objects.equals(accountNumber, transaction.getAccount().getAccountNumber())) {
             throw new AccountException(ACCOUNT_NUMBER_UN_MATCH);
         }
+
+        // 취소하려는 금액이 이미 사용한 금액이랑 다를 때
         if (!Objects.equals(amount, transaction.getAmount())) {
             throw new AccountException(AMOUNT_UN_MATCH);
         }
+
+        // 잔액을 사용한지 1년이 넘었을 때
         if (transaction.getTransactedAt().isBefore(LocalDateTime.now().minusYears(1))) {
             throw new AccountException(TOO_OLD_ORDER_TO_CANCEL);
         }
     }
 
+    /** cancel transaction 실패 결과 저장 */
     @Transactional
     public void saveFailedCancelTransaction(String accountNumber, Long amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber)
@@ -140,6 +150,7 @@ public class TransactionService {
         saveAndGetTransaction(CANCEL, F, account, amount);
     }
 
+    /** transactionId 로 transaction 조회 */
     @Transactional
     public TransactionDto queryTransaction(String transactionId) {
         return TransactionDto.fromEntity(

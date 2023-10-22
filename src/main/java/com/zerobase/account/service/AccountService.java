@@ -58,8 +58,11 @@ public class AccountService {
         );
     }
 
+    /** 계좌 생성 validation */
     private void validateCreateAccount(AccountUser accountUser) {
-        if (accountRepository.countByAccountUser(accountUser) >= 10) {
+        // 계좌가 10개가 넘을 때
+        if (accountRepository
+                .countByAccountUserAndAccountStatus(accountUser, IN_USE) >= 10) {
             throw new AccountException(MAX_ACCOUNT_PER_USER_10);
         }
     }
@@ -72,6 +75,7 @@ public class AccountService {
         return accountRepository.findById(id).get();
     }
 
+    /** 계좌 해지 */
     @Transactional
     public AccountDto deleteAccount(Long userId, String accountNumber) {
         AccountUser accountUser = getAccountUser(userId);
@@ -90,6 +94,7 @@ public class AccountService {
         return AccountDto.fromEntity(account);
     }
 
+    /** 계좌 해지 validation */
     private void validateDeleteAccount(AccountUser accountUser, Account account) {
         // 유저 아이디와, 계좌 소유주가 다를 때
         if (!Objects.equals(accountUser.getId(), account.getAccountUser().getId())) {
@@ -107,6 +112,7 @@ public class AccountService {
         }
     }
 
+    /** 계좌 번호로 계좌 조회 */
     @Transactional
     public List<AccountDto> getAccountsByUserId(Long userId,
                                                 AccountStatus accountStatus) {

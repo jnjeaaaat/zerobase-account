@@ -1,9 +1,6 @@
 package com.zerobase.account.controller;
 
-import com.zerobase.account.dto.CancelBalance;
-import com.zerobase.account.dto.QueryTransactionResponse;
-import com.zerobase.account.dto.TransactionDto;
-import com.zerobase.account.dto.UseBalance;
+import com.zerobase.account.dto.*;
 import com.zerobase.account.exception.AccountException;
 import com.zerobase.account.service.TransactionService;
 import jakarta.validation.Valid;
@@ -11,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.Query;
+import static com.zerobase.account.type.SuccessCode.*;
 
 /**
  * 잔액 관련 컨트롤러
@@ -26,16 +23,20 @@ import javax.management.Query;
 public class TransactionController {
     private final TransactionService transactionService;
 
+    /** 잔액 사용 transaction */
     @PostMapping("/transaction/use")
-    public UseBalance.Response useBalance(
+    public BaseResponse<UseBalance.Response> useBalance(
             @Valid @RequestBody UseBalance.Request request) {
 
         try {
-            return UseBalance.Response.from(
-                    transactionService.useBalance(
-                            request.getUserId(),
-                            request.getAccountNumber(),
-                            request.getAmount()
+            return new BaseResponse<>(
+                    SUCCESS_USE_BALANCE,
+                    UseBalance.Response.from(
+                            transactionService.useBalance(
+                                    request.getUserId(),
+                                    request.getAccountNumber(),
+                                    request.getAmount()
+                            )
                     )
             );
         } catch (AccountException e) {
@@ -51,16 +52,20 @@ public class TransactionController {
 
     }
 
+    /** 잔액 사용 취소 transaction */
     @PostMapping("/transaction/cancel")
-    public CancelBalance.Response cancelBalance(
+    public BaseResponse<CancelBalance.Response> cancelBalance(
             @Valid @RequestBody CancelBalance.Request request) {
 
         try {
-            return CancelBalance.Response.from(
-                    transactionService.cancelBalance(
-                            request.getTransactionId(),
-                            request.getAccountNumber(),
-                            request.getAmount()
+            return new BaseResponse<>(
+                    SUCCESS_CANCEL_BALANCE,
+                    CancelBalance.Response.from(
+                            transactionService.cancelBalance(
+                                    request.getTransactionId(),
+                                    request.getAccountNumber(),
+                                    request.getAmount()
+                            )
                     )
             );
         } catch (AccountException e) {
@@ -75,11 +80,15 @@ public class TransactionController {
         }
     }
 
+    /** transactionId로 transaction 조회 */
     @GetMapping("/transaction/{transactionId}")
-    public QueryTransactionResponse queryTransaction(
+    public BaseResponse<QueryTransactionResponse> queryTransaction(
             @PathVariable String transactionId) {
-        return QueryTransactionResponse.from(
-                transactionService.queryTransaction(transactionId)
+        return new BaseResponse<>(
+                SUCCESS_GET_TRANSACTION,
+                QueryTransactionResponse.from(
+                        transactionService.queryTransaction(transactionId)
+                )
         );
     }
 

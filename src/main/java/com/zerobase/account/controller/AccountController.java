@@ -24,6 +24,7 @@ public class AccountController {
     private final AccountService accountService;
     private final RedisTestService redisTestService;
 
+    // 계좌 생성
     @PostMapping("/account")
     public BaseResponse<CreateAccount.Response> createAccount(
             @RequestBody @Valid CreateAccount.Request request) {
@@ -40,6 +41,7 @@ public class AccountController {
 
     }
 
+    // 계좌 해지
     @DeleteMapping("/account")
     public BaseResponse<DeleteAccount.Response> deleteAccount(
             @RequestBody @Valid DeleteAccount.Request request) {
@@ -56,6 +58,7 @@ public class AccountController {
 
     }
 
+    // 계좌번호로 계좌 조회
     @GetMapping("/account")
     public BaseResponse<List<AccountInfo>> getAccountsByUserId(
             @RequestParam("user_id") Long userId) {

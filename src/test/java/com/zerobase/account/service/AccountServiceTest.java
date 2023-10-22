@@ -117,7 +117,7 @@ class AccountServiceTest {
                 .name("Pobi").build();
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
-        given(accountRepository.countByAccountUser(any()))
+        given(accountRepository.countByAccountUserAndAccountStatus(any(), any()))
                 .willReturn(10);
 
         //when
