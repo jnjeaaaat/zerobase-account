@@ -1,8 +1,7 @@
 package com.zerobase.account.controller;
 
-import com.zerobase.account.config.BaseResponse;
+import com.zerobase.account.dto.BaseResponse;
 import com.zerobase.account.domain.Account;
-import com.zerobase.account.dto.AccountDto;
 import com.zerobase.account.dto.AccountInfo;
 import com.zerobase.account.dto.CreateAccount;
 import com.zerobase.account.dto.DeleteAccount;
@@ -29,18 +28,15 @@ public class AccountController {
     public BaseResponse<CreateAccount.Response> createAccount(
             @RequestBody @Valid CreateAccount.Request request) {
 
-        try {
-            return new BaseResponse<>(
-                    SUCCESS_CREATE_ACCOUNT,
-                    CreateAccount.Response.from(
-                            accountService.createAccount(
-                                    request.getUserId(),
-                                    request.getInitialBalance()
-                            )
-                    ));
-        } catch (AccountException exception) {
-            return new BaseResponse<>(exception.getErrorCode());
-        }
+        return new BaseResponse<>(
+                SUCCESS_CREATE_ACCOUNT,
+                CreateAccount.Response.from(
+                        accountService.createAccount(
+                                request.getUserId(),
+                                request.getInitialBalance()
+                        )
+                )
+        );
 
     }
 
@@ -48,18 +44,15 @@ public class AccountController {
     public BaseResponse<DeleteAccount.Response> deleteAccount(
             @RequestBody @Valid DeleteAccount.Request request) {
 
-        try {
-            return new BaseResponse<>(
-                    SUCCESS_DELETE_ACCOUNT,
-                    DeleteAccount.Response.from(
-                            accountService.deleteAccount(
-                                    request.getUserId(),
-                                    request.getAccountNumber()
-                            )
-                    ));
-        } catch (AccountException exception) {
-            return new BaseResponse<>(exception.getErrorCode());
-        }
+        return new BaseResponse<>(
+                SUCCESS_DELETE_ACCOUNT,
+                DeleteAccount.Response.from(
+                        accountService.deleteAccount(
+                                request.getUserId(),
+                                request.getAccountNumber()
+                        )
+                )
+        );
 
     }
 
