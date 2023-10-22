@@ -12,7 +12,12 @@ public enum ErrorCode {
     USER_ACCOUNT_UN_MATCH(403, "사용자와 계좌의 소유주가 다릅니다."),
     ACCOUNT_ALREADY_UNREGISTERED(404, "계좌가 이미 해지되었습니다."),
     BALANCE_NOT_EMPTY(405, "잔액이 있는 계좌는 해지할 수 없습니다."),
-    AMOUNT_EXCEED_BALANCE(406, "거래 금액이 계좌 잔액보다 큽니다.")
+    AMOUNT_EXCEED_BALANCE(406, "거래 금액이 계좌 잔액보다 큽니다."),
+    TRANSACTION_NOT_FOUND(407, "해당 거래를 찾을 수 없습니다."),
+    ACCOUNT_NUMBER_UN_MATCH(408, "잔액 사용 취소하려는 계좌가 다릅니다."),
+    AMOUNT_UN_MATCH(409, "취소하려는 거래 금액이 다릅니다."),
+    TOO_OLD_ORDER_TO_CANCEL(410, "1년이 지난 거래는 취소가 불가능합니다."),
+    INVALID_REQUEST(411, "잘못된 요청입니다.")
     ;
 
 
