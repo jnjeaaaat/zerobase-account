@@ -449,4 +449,77 @@ class TransactionServiceTest {
         //then
         assertEquals(ErrorCode.TOO_OLD_ORDER_TO_CANCEL, exception.getErrorCode());
     }
+
+    @Test
+    @DisplayName("실패 트랜젝션 저장 성공(거래 취소)")
+    void saveFiledCancelTransaction() {
+        //given
+        given(accountRepository.findByAccountNumber(anyString()))
+                .willReturn(Optional.of(Account.builder()
+                        .accountUser(AccountUser.builder()
+                                .id(12L)
+                                .name("Pobi").build())
+                        .accountStatus(IN_USE)
+                        .accountNumber("1000000012")
+                        .balance(10000L)
+                        .build()));
+
+        ArgumentCaptor<Transaction> captor = ArgumentCaptor.forClass(Transaction.class);
+
+        //when
+        transactionService.saveFailedCancelTransaction("1000000000", 1000L);
+
+        //then
+        verify(transactionRepository, times(1)).save(captor.capture());
+
+        assertEquals(CANCEL, captor.getValue().getTransactionType());
+        assertEquals(F, captor.getValue().getTransactionResultType());
+        assertEquals("1000000012", captor.getValue().getAccount().getAccountNumber());
+        assertEquals(1000L, captor.getValue().getAmount());
+        assertEquals(10000L, captor.getValue().getBalanceSnapshot());
+    }
+
+    @Test
+    void successQueryTransaction() {
+        //given
+        Account account = Account.builder()
+                .accountNumber("1234567890")
+                .balance(30000L)
+                .build();
+        given(transactionRepository.findByTransactionId(anyString()))
+                .willReturn(Optional.of(Transaction.builder()
+                        .account(account)
+                        .transactionType(USE)
+                        .transactionResultType(S)
+                        .transactionId("transactionId")
+                        .amount(10000L)
+                        .balanceSnapshot(20000L)
+                        .transactedAt(LocalDateTime.now())
+                        .build()));
+        //when
+        TransactionDto transactionDto =
+                transactionService.queryTransaction("asdfzxcv");
+
+        //then
+        assertEquals("1234567890", transactionDto.getAccountNumber());
+        assertEquals(USE, transactionDto.getTransactionType());
+        assertEquals(S, transactionDto.getTransactionResultType());
+        assertEquals("transactionId", transactionDto.getTransactionId());
+        assertEquals(10000L, transactionDto.getAmount());
+    }
+
+    @Test
+    @DisplayName("해당 거래 없음 - 거래 조회 실패")
+    void getTransactionFailed_transactionNotFound() {
+        //given
+        given(transactionRepository.findByTransactionId(anyString()))
+                .willReturn(Optional.empty());
+
+        //when
+        AccountException exception = assertThrows(AccountException.class,
+                () -> transactionService.queryTransaction("transactionId"));
+
+        //then
+        assertEquals(ErrorCode.TRANSACTION_NOT_FOUND, exception.getErrorCode());
+    }
 }
