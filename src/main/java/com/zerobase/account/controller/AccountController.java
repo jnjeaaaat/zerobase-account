@@ -5,9 +5,7 @@ import com.zerobase.account.domain.Account;
 import com.zerobase.account.dto.AccountInfo;
 import com.zerobase.account.dto.CreateAccount;
 import com.zerobase.account.dto.DeleteAccount;
-import com.zerobase.account.exception.AccountException;
 import com.zerobase.account.service.AccountService;
-import com.zerobase.account.service.RedisTestService;
 import com.zerobase.account.type.AccountStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,6 @@ import static com.zerobase.account.type.SuccessCode.*;
 @RequiredArgsConstructor
 public class AccountController {
     private final AccountService accountService;
-    private final RedisTestService redisTestService;
 
     // 계좌 생성
     @PostMapping("/account")
@@ -73,11 +70,6 @@ public class AccountController {
                                 .build())
                         .collect(Collectors.toList())
         );
-    }
-
-    @GetMapping("/lock")
-    public String getLock() {
-        return redisTestService.getLock();
     }
 
     @GetMapping("/account/{accountId}")

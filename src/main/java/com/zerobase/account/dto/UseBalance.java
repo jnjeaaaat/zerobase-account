@@ -1,5 +1,6 @@
 package com.zerobase.account.dto;
 
+import com.zerobase.account.aop.AccountLockIdInterface;
 import com.zerobase.account.type.TransactionResultType;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -18,7 +19,7 @@ public class UseBalance {
     @Getter
     @Setter
     @AllArgsConstructor
-    public static class Request {
+    public static class Request implements AccountLockIdInterface {
         @NotNull
         @Min(1)
         /*

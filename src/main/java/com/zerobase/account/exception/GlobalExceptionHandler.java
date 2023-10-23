@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ErrorResponse handleException(Exception e) {
-        log.error("{} is occurred.", e);
+        log.error("Exception is occurred.", e);
 
         return new ErrorResponse(
                 INTERNAL_SERVER_ERROR,

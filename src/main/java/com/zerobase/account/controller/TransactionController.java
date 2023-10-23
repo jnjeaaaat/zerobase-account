@@ -1,5 +1,6 @@
 package com.zerobase.account.controller;
 
+import com.zerobase.account.aop.AccountLock;
 import com.zerobase.account.dto.*;
 import com.zerobase.account.exception.AccountException;
 import com.zerobase.account.service.TransactionService;
@@ -23,12 +24,17 @@ import static com.zerobase.account.type.SuccessCode.*;
 public class TransactionController {
     private final TransactionService transactionService;
 
-    /** 잔액 사용 transaction */
+    /**
+     * 잔액 사용 transaction
+     */
     @PostMapping("/transaction/use")
+    @AccountLock
     public BaseResponse<UseBalance.Response> useBalance(
-            @Valid @RequestBody UseBalance.Request request) {
+            @Valid @RequestBody UseBalance.Request request)
+            throws InterruptedException {
 
         try {
+            Thread.sleep(3000L);
             return new BaseResponse<>(
                     SUCCESS_USE_BALANCE,
                     UseBalance.Response.from(
@@ -52,8 +58,11 @@ public class TransactionController {
 
     }
 
-    /** 잔액 사용 취소 transaction */
+    /**
+     * 잔액 사용 취소 transaction
+     */
     @PostMapping("/transaction/cancel")
+    @AccountLock
     public BaseResponse<CancelBalance.Response> cancelBalance(
             @Valid @RequestBody CancelBalance.Request request) {
 
@@ -80,7 +89,9 @@ public class TransactionController {
         }
     }
 
-    /** transactionId로 transaction 조회 */
+    /**
+     * transactionId로 transaction 조회
+     */
     @GetMapping("/transaction/{transactionId}")
     public BaseResponse<QueryTransactionResponse> queryTransaction(
             @PathVariable String transactionId) {
