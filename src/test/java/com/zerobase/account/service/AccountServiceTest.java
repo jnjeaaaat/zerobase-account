@@ -43,8 +43,8 @@ class AccountServiceTest {
     void createAccountSuccess() {
         //given
         AccountUser user = AccountUser.builder()
-                .id(12L)
                 .name("Pobi").build();
+        user.setId(12L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findFirstByOrderByIdDesc())
@@ -71,8 +71,8 @@ class AccountServiceTest {
     void createFirstAccountSuccess() {
         //given
         AccountUser user = AccountUser.builder()
-                .id(15L)
                 .name("Pobi").build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findFirstByOrderByIdDesc())
@@ -113,8 +113,8 @@ class AccountServiceTest {
     void createAccount_maxAccountIs10() {
         //given
         AccountUser user = AccountUser.builder()
-                .id(15L)
                 .name("Pobi").build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.countByAccountUserAndAccountStatus(any(), any()))
@@ -133,9 +133,8 @@ class AccountServiceTest {
     void deleteAccountSuccess() {
         //given
         AccountUser user = AccountUser.builder()
-                .id(15L)
                 .build();
-//                .name("Pobi").build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -176,8 +175,8 @@ class AccountServiceTest {
     @DisplayName("해당 계좌 없음 - 계좌 해지 실패")
     void deleteAccount_AccountNotFound() {
         //given
-        AccountUser user = AccountUser.builder()
-                .id(15L).build();
+        AccountUser user = AccountUser.builder().build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -195,10 +194,10 @@ class AccountServiceTest {
     @DisplayName("계좌 소유주 다름 - 계좌 해지 실패")
     void deleteAccountFailed_userUnMatch() {
         //given
-        AccountUser user = AccountUser.builder()
-                .id(15L).build();
-        AccountUser otherUser = AccountUser.builder()
-                .id(13L).build();
+        AccountUser user = AccountUser.builder().build();
+        user.setId(15L);
+        AccountUser otherUser = AccountUser.builder().build();
+        user.setId(13L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -218,8 +217,8 @@ class AccountServiceTest {
     @DisplayName("이미 해지된 계좌 - 계좌 해지 실패")
     void deleteAccountFailed_alreadyUnregistered() {
         //given
-        AccountUser user = AccountUser.builder()
-                .id(15L).build();
+        AccountUser user = AccountUser.builder().build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -242,8 +241,8 @@ class AccountServiceTest {
     @DisplayName("잔액 남음 - 계좌 해지 실패")
     void deleteAccountFailed_hasBalance() {
         //given
-        AccountUser user = AccountUser.builder()
-                .id(15L).build();
+        AccountUser user = AccountUser.builder().build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
         given(accountRepository.findByAccountNumber(anyString()))
@@ -264,8 +263,8 @@ class AccountServiceTest {
     @Test
     void successGetAccountsByUserId() {
         //given
-        AccountUser user = AccountUser.builder()
-                .id(15L).build();
+        AccountUser user = AccountUser.builder().build();
+        user.setId(15L);
         given(accountUserRepository.findById(anyLong()))
                 .willReturn(Optional.of(user));
 
